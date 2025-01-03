@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  Trash2,
   TrashIcon,
 } from "lucide-react";
 import { useContext } from "react";

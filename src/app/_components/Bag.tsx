@@ -117,11 +117,7 @@ const Bag = () => {
   });
 
   // Destructure the formik object
-  const { errors, touched, values, handleChange, handleSubmit } = formik;
-
-  function FormInfo({ className }: React.ComponentProps<"form">) {
-    return;
-  }
+  const { values, handleChange, handleSubmit } = formik;
 
   if (!products || products.length === 0) {
     return (

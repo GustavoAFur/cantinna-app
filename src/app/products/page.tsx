@@ -53,7 +53,7 @@ const Products = () => {
   return (
     <div>
       <Header />
-      <h1 className="px-8 pt-6">Resultados para: "{searchQuery}"</h1>
+      <h1 className="px-8 pt-6">Resultados para: &quot;{searchQuery}&quot;</h1>
       <div className="px-8 mt-5 grid grid-cols-2 gap-4 w-full">
         {products.map((product) => (
           <Itens key={product.id} product={product} />

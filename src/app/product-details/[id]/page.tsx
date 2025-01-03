@@ -4,7 +4,6 @@ import { Product } from "@/app/_components/RecomendedList";
 import {
   collection,
   doc,
-  Firestore,
   getDoc,
   getDocs,
   query,
@@ -18,7 +17,6 @@ import {
   ChevronLeft,
   ChevronLeftIcon,
   ChevronRightIcon,
-  ShareIcon,
 } from "lucide-react";
 import { BagContext } from "@/app/_context/bagContext";
 import Bag from "@/app/_components/Bag";
@@ -29,17 +27,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import Itens from "@/app/_components/Itens";
-interface DetailsParams {
-  params: {
-    id: string;
-  };
-}
 
 const ProductDetails = () => {
   const params = useParams(); // Usando o hook para acessar os parâmetros
   const router = useRouter();
 
-  const { products, addProductToCart } = useContext(BagContext);
+  const { addProductToCart } = useContext(BagContext);
 
   const [product, setProduct] = useState<Product>();
   const [beverages, setBeverages] = useState<Product[]>([]);
@@ -90,7 +83,7 @@ const ProductDetails = () => {
       }
     };
     fetchProduct();
-  }, []);
+  }, [params.id,router]);
 
   useEffect(() => {
     const fetchBeverages = async () => {
