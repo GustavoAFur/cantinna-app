@@ -5,7 +5,7 @@ import {
   query,
   collection,
   getDocs,
-  orderBy,
+  orderBy, 
   limit,
   where,
 } from "firebase/firestore";
@@ -50,14 +50,19 @@ const ProductsByCategory = ({
 
   if (isLoading) {
     return (
-      <div className="flex gap-4 overflow-hidden">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div key={index} className=" min-w-[140px] flex flex-col gap-4 mt-4">
-            <Skeleton className="w-full h-[140px] rounded-sm" />
-            <Skeleton className="w-full h-3 rounded-sm" />
-            <Skeleton className="w-full h-3 rounded-sm" />
-          </div>
-        ))}
+      <div className="px-8">
+        <div className="flex gap-4 overflow-hidden">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div
+              key={index}
+              className=" min-w-[140px] flex flex-col gap-4 mt-4"
+            >
+              <Skeleton className="w-full h-[140px] rounded-sm" />
+              <Skeleton className="w-full h-3 rounded-sm" />
+              <Skeleton className="w-full h-3 rounded-sm" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

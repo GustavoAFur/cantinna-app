@@ -53,7 +53,7 @@ const RecomendedList = () => {
       <div className="px-8">
         <h1 className="font-bold text-xl">Recomendados:</h1>
         <div className="flex gap-4 overflow-hidden">
-          {Array.from({ length: 4 }).map((_, index) => (
+          {Array.from({ length: 8 }).map((_, index) => (
             <div
               key={index}
               className=" min-w-[140px] flex flex-col gap-4 mt-4"
