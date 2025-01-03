@@ -1,3 +1,5 @@
+import path from 'path';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -5,10 +7,14 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "firebasestorage.googleapis.com",
-        port: "", // Deixe vazio se não houver porta
-        pathname: "/**", // Permitir todos os caminhos
+        port: "",
+        pathname: "/**",
       },
     ],
+  },
+  webpack(config: any) {
+    config.resolve.alias['@'] = path.join(__dirname, 'src');
+    return config;
   },
 };
 
