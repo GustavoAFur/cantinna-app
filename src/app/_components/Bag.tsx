@@ -20,6 +20,14 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+interface CustomerInfo {
+  name: string;
+  address: string;
+  phone: string;
+  complement?: string;
+  observation?: string;
+}
+
 const schema = Yup.object().shape({
   name: Yup.string().required(),
   address: Yup.string().required(),
@@ -56,11 +64,11 @@ const Bag = () => {
     };
   }, []);
 
-  const saveCustomerInfo = (data: any) => {
+  const saveCustomerInfo = (data: CustomerInfo) => {
     localStorage.setItem("customerInfo", JSON.stringify(data));
   };
 
-  const getCustomerInfo = () => {
+  const getCustomerInfo = (): CustomerInfo | null => {
     const data = localStorage.getItem("customerInfo");
     return data ? JSON.parse(data) : null;
   };
@@ -79,7 +87,7 @@ const Bag = () => {
     validationSchema: schema,
 
     // Handle form submission
-    onSubmit: async ({ name, address, phone, complement, observation }) => {
+    onSubmit: async ({ name, address, phone, complement, observation }:CustomerInfo) => {
       try {
         // Salvar informações do cliente no localStorage
         saveCustomerInfo({ name, address, phone, complement, observation });
@@ -110,6 +118,7 @@ const Bag = () => {
         setIsSaving(false);
         setIsOpen(false);
       } catch (error) {
+        console.log(error);
         alert("Erro ao realizar o pedido.");
         setIsSaving(false);
       }

@@ -197,7 +197,9 @@ const ProductDetails = () => {
           <Button
             className="w-full mt-4 bg-[#e84f1c]"
             onClick={() => {
-              product && addProductToCart({ product }, quantity);
+              if (product) {
+                addProductToCart({ product }, quantity);
+              }
               setOpenBag(true);
             }}
           >
