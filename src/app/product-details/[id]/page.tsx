@@ -138,7 +138,7 @@ const ProductDetails = () => {
   return (
     <>
       <div>
-        <div className="relative w-full h-[300px] bg-red-500">
+        <div className="relative w-full h-[300px] bg-slate-300">
           <Image
             src={product?.imageUrl || "/image-not-found.png"}
             alt={product?.name || "Imagem nao encontrada"}
