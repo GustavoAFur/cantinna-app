@@ -8,6 +8,7 @@ import {
   getDocs,
   query,
   where,
+  runTransaction
 } from "firebase/firestore";
 import { db } from "@/utils/firebaseConfig";
 import { useParams, useRouter } from "next/navigation";
@@ -57,6 +58,27 @@ const ProductDetails = () => {
       return prev;
     });
   };
+
+  const addProduct = async ({ product }: { product: Product }) => {
+    try {
+      await runTransaction(db, async (transaction) => {
+        const sfDocRef = doc(db, "products", product?.id as string);
+        const sfDoc = await transaction.get(sfDocRef);
+        if (!sfDoc.exists()) {
+          throw "Document does not exist!";
+        }
+    
+        const newRelevance = sfDoc.data().relevance + 1;
+        transaction.update(sfDocRef, { relevance: newRelevance });
+      }).then(() => {
+        addProductToCart({ product }, quantity);
+      })
+      console.log("Transaction successfully committed!");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
+    
+  }
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -198,7 +220,7 @@ const ProductDetails = () => {
             className="w-full mt-4 bg-[#e84f1c]"
             onClick={() => {
               if (product) {
-                addProductToCart({ product }, quantity);
+                addProduct({ product });
               }
               setOpenBag(true);
             }}
