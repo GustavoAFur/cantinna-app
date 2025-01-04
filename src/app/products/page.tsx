@@ -1,12 +1,14 @@
 "use client";
+
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Header from "../_components/Header";
-import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/utils/firebaseConfig";
 import { Product } from "../_components/RecomendedList";
 import Itens from "../_components/Itens";
-const Products = () => {
+
+const ProductsContent = () => {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("name");
   const [products, setProducts] = useState<Product[]>([]);
@@ -60,6 +62,14 @@ const Products = () => {
         ))}
       </div>
     </div>
+  );
+};
+
+const Products = () => {
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <ProductsContent />
+    </Suspense>
   );
 };
 
