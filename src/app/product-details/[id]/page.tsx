@@ -67,7 +67,7 @@ const ProductDetails = () => {
         if (!sfDoc.exists()) {
           throw "Document does not exist!";
         }
-    
+
         const newRelevance = sfDoc.data().relevance + 1;
         transaction.update(sfDocRef, { relevance: newRelevance });
       }).then(() => {
@@ -77,7 +77,7 @@ const ProductDetails = () => {
     } catch (e) {
       console.log("Transaction failed: ", e);
     }
-    
+
   }
 
   useEffect(() => {
@@ -105,7 +105,7 @@ const ProductDetails = () => {
       }
     };
     fetchProduct();
-  }, [params.id,router]);
+  }, [params.id, router]);
 
   useEffect(() => {
     const fetchBeverages = async () => {
@@ -138,7 +138,7 @@ const ProductDetails = () => {
   return (
     <>
       <div>
-        <div className="relative w-full h-[300px]">
+        <div className="relative w-full h-[300px] bg-red-500">
           <Image
             src={product?.imageUrl || "/image-not-found.png"}
             alt={product?.name || "Imagem nao encontrada"}
@@ -153,80 +153,86 @@ const ProductDetails = () => {
             <ChevronLeft />
           </Button>
         </div>
-        <div className="pt-5 px-5 relative mt-[-1.5rem] zindex-10 bg-white rounded-tl-3xl rounded-tr-3xl">
-          <h1 className="font-semibold text-xl capitalize">{product?.name}</h1>
-          <span className="text-xs">{product?.category}</span>
+        <div className="pt-5 relative mt-[-1.5rem] zindex-10 bg-white rounded-tl-3xl rounded-tr-3xl">
+          <div className="px-5">
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-baseline gap-2">
-              <h1 className="font-semibold text-lg">
-                {product?.price.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
-              </h1>
-              <span className="text-muted-foreground text-xs">
-                {product?.und} Und
-              </span>
+
+            <h1 className="font-semibold text-xl capitalize">{product?.name}</h1>
+            <span className="text-xs">{product?.category}</span>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-baseline gap-2">
+                <h1 className="font-semibold text-lg">
+                  {product?.price.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </h1>
+                <span className="text-muted-foreground text-xs">
+                  {product?.und} Und
+                </span>
+              </div>
+              <div className="flex items-center gap-3 text-center">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="border border-solid border-muted-foreground"
+                  onClick={handleDecreaseQuantity}
+                >
+                  <ChevronLeftIcon />
+                </Button>
+
+                <span className="w-4">{quantity}</span>
+
+                <Button
+                  size="icon"
+                  className="bg-[#e84f1c]"
+                  onClick={handleIncreaseQuantity}
+                >
+                  <ChevronRightIcon />
+                </Button>
+                <Button
+                  size="icon"
+                  className="bg-[#e84f1c]"
+                  onClick={handleIncreaseQuantity10}
+                >
+                  <span>+10</span>
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center gap-3 text-center">
-              <Button
-                size="icon"
-                variant="ghost"
-                className="border border-solid border-muted-foreground"
-                onClick={handleDecreaseQuantity}
-              >
-                <ChevronLeftIcon />
-              </Button>
 
-              <span className="w-4">{quantity}</span>
-
-              <Button
-                size="icon"
-                className="bg-[#e84f1c]"
-                onClick={handleIncreaseQuantity}
-              >
-                <ChevronRightIcon />
-              </Button>
-              <Button
-                size="icon"
-                className="bg-[#e84f1c]"
-                onClick={handleIncreaseQuantity10}
-              >
-                <span>+10</span>
-              </Button>
+            <div className="space-y-2 mt-4">
+              <h1 className="font-semibold text-lg">Sobre</h1>
+              <p className="text-muted-foreground capitalize">
+                {product?.description}
+              </p>
             </div>
-          </div>
-
-          <div className="space-y-2 mt-4">
-            <h1 className="font-semibold text-lg">Sobre</h1>
-            <p className="text-muted-foreground capitalize">
-              {product?.description}
-            </p>
           </div>
 
           {beverages.length > 0 && (
             <div className="w-full mt-4">
-              <h1 className="font-bold text-xl">Experimente uma bebida...</h1>
-              <div className="flex gap-4 overflow-x-scroll scrollbar-hide">
+              <h1 className="font-bold text-xl px-5">Experimente uma bebida...</h1>
+              <div className="flex gap-4 px-5 overflow-x-scroll scrollbar-hide">
                 {beverages.map((product) => (
                   <Itens key={product.id} product={product} />
                 ))}
               </div>
             </div>
           )}
+          <div className="w-full px-5 pb-5">
 
-          <Button
-            className="w-full mt-4 bg-[#e84f1c]"
-            onClick={() => {
-              if (product) {
-                addProduct({ product });
-              }
-              setOpenBag(true);
-            }}
-          >
-            Adicionar
-          </Button>
+            <Button
+              className="w-full mt-4 bg-[#e84f1c]"
+              onClick={() => {
+                if (product) {
+                  addProduct({ product });
+                }
+                setOpenBag(true);
+              }}
+            >
+              Adicionar
+            </Button>
+          </div>
         </div>
       </div>
       <Sheet open={openBag} onOpenChange={setOpenBag}>
