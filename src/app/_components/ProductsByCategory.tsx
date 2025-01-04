@@ -27,7 +27,6 @@ const ProductsByCategory = ({
         const q = query(
           collection(db, "products"),
           where("category", "==", CategoryName),
-          orderBy("relevance", "desc"),
           limit(10)
         );
 
